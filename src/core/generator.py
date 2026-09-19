@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from openai import OpenAI
@@ -54,7 +55,17 @@ def _generate_answer(
     config: ProjectConfig,
     settings: AppSettings,
 ) -> str:
-    client = OpenAI()
+    groq_api_key = os.getenv("GROQ_API_KEY")
+
+    if not groq_api_key:
+        raise RuntimeError(
+            "GROQ_API_KEY is not configured. "
+            "Add it to the .env file before generating answers."
+        )
+    client = OpenAI(
+        api_key=groq_api_key,
+        base_url=settings.groq_base_url,
+    )
 
     context = _build_llm_context(retrieved_chunks)
 
@@ -66,7 +77,7 @@ def _generate_answer(
     )
 
     response = client.chat.completions.create(
-        model=settings.openai_model,
+        model=settings.groq_model,
         temperature=0.1,
         messages=[
             {

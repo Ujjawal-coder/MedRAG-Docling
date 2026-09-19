@@ -17,6 +17,8 @@ class AppSettings:
     qdrant_host: str
     qdrant_port: int
     openai_model: str
+    groq_model: str
+    groq_base_url: str
     embedding_model: str
     embedding_output_dimensionality: int
     embedding_batch_size: int
@@ -34,6 +36,8 @@ class AppSettings:
             qdrant_host=os.getenv("QDRANT_HOST", "localhost"),
             qdrant_port=int(os.getenv("QDRANT_PORT", "6333")),
             openai_model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+            groq_model=os.getenv("GROQ_MODEL","openai/gpt-oss-120b",),
+            groq_base_url=os.getenv("GROQ_BASE_URL","https://api.groq.com/openai/v1",),
             embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5"),
             embedding_output_dimensionality=int(
                 os.getenv("EMBEDDING_OUTPUT_DIMENSIONALITY", "384")
