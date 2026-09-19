@@ -15,11 +15,10 @@ services:
       ACTIVE_PROJECT: medrag
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-BAAI/bge-small-en-v1.5}
       EMBEDDING_OUTPUT_DIMENSIONALITY: ${EMBEDDING_OUTPUT_DIMENSIONALITY:-384}
       EMBEDDING_BATCH_SIZE: ${EMBEDDING_BATCH_SIZE:-16}
+      VECTOR_STORE_QUERY_MODE: ${VECTOR_STORE_QUERY_MODE:-default}
       CHUNK_SIZE: ${CHUNK_SIZE:-1024}
       CHUNK_OVERLAP: ${CHUNK_OVERLAP:-100}
       MAX_GUIDELINE_FILES: ${MAX_GUIDELINE_FILES:-3}
@@ -46,8 +45,6 @@ services:
       ACTIVE_PROJECT: medrag
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
       GROQ_API_KEY: ${GROQ_API_KEY}
       GROQ_MODEL: ${GROQ_MODEL:-openai/gpt-oss-120b}
       GROQ_BASE_URL: ${GROQ_BASE_URL:-https://api.groq.com/openai/v1}
@@ -56,6 +53,10 @@ services:
       EMBEDDING_BATCH_SIZE: ${EMBEDDING_BATCH_SIZE:-16}
       CHUNK_SIZE: ${CHUNK_SIZE:-1024}
       CHUNK_OVERLAP: ${CHUNK_OVERLAP:-100}
+      VECTOR_STORE_QUERY_MODE: ${VECTOR_STORE_QUERY_MODE:-default}
+      SIMILARITY_TOP_K: ${SIMILARITY_TOP_K:-1}
+      SPARSE_TOP_K: ${SPARSE_TOP_K:-8}
+      HYBRID_ALPHA: ${HYBRID_ALPHA:-0.5}
     volumes:
       - ./src/projects/medrag/data:/app/src/projects/medrag/data
     depends_on:

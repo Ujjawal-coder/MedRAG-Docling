@@ -143,11 +143,11 @@ sequenceDiagram
 Requirements:
 
 - Docker with Compose
-- OpenAI API key
+- Groq API key
 
 ```bash
 cp .env.example .env
-# Set OPENAI_API_KEY in .env
+# Set GROQ_API_KEY in .env
 docker compose up -d --build
 ```
 
@@ -170,9 +170,10 @@ docker compose down
 | Variable | Default | Purpose |
 |---|---|---|
 | `ACTIVE_PROJECT` | `medrag` | Registered project to load |
-| `OPENAI_API_KEY` | - | Required for answer generation |
+| `GROQ_API_KEY` | - | Required for answer generation and Groq-based evaluation |
 | `QDRANT_HOST` / `QDRANT_PORT` | `localhost` / `6333` | Vector store connection |
-| `OPENAI_MODEL` | `gpt-4o-mini` | Generation model |
+| `GROQ_MODEL` | `openai/gpt-oss-120b` | Groq generation and evaluation model  |
+| `GROQ_BASE_URL` | `https://api.groq.com/openai/v1` | Groq OpenAI-compatible API endpoint |
 | `EMBEDDING_MODEL` | `BAAI/bge-small-en-v1.5` | Local embedding model |
 | `EMBEDDING_OUTPUT_DIMENSIONALITY` | `384` | Vector dimensionality |
 | `EMBEDDING_BATCH_SIZE` | `16` | Embedding batch size |
@@ -182,7 +183,7 @@ docker compose down
 | `PUBMED_MAX_RESULTS` | `5` | Maximum abstracts per query |
 | `CHUNK_SIZE` / `CHUNK_OVERLAP` | `1024` / `100` | Docling chunk token budget and plain-text fallback overlap |
 | `VECTOR_STORE_QUERY_MODE` | `default` | `default` or `hybrid` retrieval |
-| `SIMILARITY_TOP_K` | `8` | Dense retrieval candidate count |
+| `SIMILARITY_TOP_K` | `1` | Dense retrieval candidate count |
 | `SPARSE_TOP_K` | `8` | Sparse retrieval candidate count for hybrid mode |
 | `HYBRID_ALPHA` | `0.5` | Dense/sparse weighting in hybrid mode |
 | `API_BASE_URL` | `http://localhost:8000` | API address used by Streamlit outside Compose |

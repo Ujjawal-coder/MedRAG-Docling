@@ -47,7 +47,7 @@ You also need:
 
 - local AWS credentials with permission to create IAM, EC2, S3, ECR, Secrets Manager, and CloudFormation resources
 - admin access to the GitHub repository
-- one `OPENAI_API_KEY`
+- one `GROQ_API_KEY`
 
 Important distinction:
 
@@ -98,7 +98,7 @@ gh auth status
 
 ## 5. Set your shell variables
 
-Use this repo’s production values:
+Use this repoâ€™s production values:
 
 ```bash
 export STACK_NAME="medrag-prod"
@@ -109,7 +109,7 @@ export GH_REPO="${GITHUB_OWNER}/${GITHUB_REPO}"
 export INSTANCE_TYPE="t3.large"
 export SECRET_NAME="medrag/prod/app"
 
-export OPENAI_API_KEY=""
+export GROQ_API_KEY=""
 ```
 
 If you already know the target VPC and subnet:
@@ -332,7 +332,7 @@ gh variable set EXISTING_GITHUB_OIDC_PROVIDER_ARN --repo "${GH_REPO}" --body "${
 ### 10.3 GitHub repository secrets for the Evaluation workflow
 
 ```bash
-printf '%s' "${OPENAI_API_KEY}" | gh secret set OPENAI_API_KEY --repo "${GH_REPO}"
+printf '%s' "${GROQ_API_KEY}" | gh secret set GROQ_API_KEY --repo "${GH_REPO}"
 ```
 
 ## 11. Put the runtime secrets into AWS Secrets Manager
@@ -342,8 +342,8 @@ aws secretsmanager put-secret-value \
   --region "${AWS_REGION}" \
   --secret-id "${SECRET_NAME}" \
   --secret-string "$(jq -nc \
-    --arg openai "${OPENAI_API_KEY}" \
-    '{OPENAI_API_KEY: $openai}')"
+    --arg groq "${GROQ_API_KEY}" \
+    '{GROQ_API_KEY: $groq}')"
 ```
 
 Verify:

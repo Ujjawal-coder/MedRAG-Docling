@@ -71,8 +71,7 @@ render_runtime_env() {
   cp "${template_file}" "${RUNTIME_ENV_FILE}"
   {
     printf 'APP_IMAGE=%s\n' "${APP_IMAGE}"
-    printf 'OPENAI_API_KEY=%s\n' "$(jq -er '.OPENAI_API_KEY' "${secret_file}")"
-    printf 'LLAMA_CLOUD_API_KEY=%s\n' "$(jq -er '.LLAMA_CLOUD_API_KEY' "${secret_file}")"
+    printf 'GROQ_API_KEY=%s\n' "$(jq -er '.GROQ_API_KEY=%s\n' "${secret_file}")"
   } >> "${RUNTIME_ENV_FILE}"
   chmod 600 "${RUNTIME_ENV_FILE}"
 }

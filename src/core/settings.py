@@ -16,7 +16,6 @@ class AppSettings:
     active_project: str
     qdrant_host: str
     qdrant_port: int
-    openai_model: str
     groq_model: str
     groq_base_url: str
     embedding_model: str
@@ -35,7 +34,6 @@ class AppSettings:
             active_project=os.getenv("ACTIVE_PROJECT", "medrag"),
             qdrant_host=os.getenv("QDRANT_HOST", "localhost"),
             qdrant_port=int(os.getenv("QDRANT_PORT", "6333")),
-            openai_model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
             groq_model=os.getenv("GROQ_MODEL","openai/gpt-oss-120b",),
             groq_base_url=os.getenv("GROQ_BASE_URL","https://api.groq.com/openai/v1",),
             embedding_model=os.getenv("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5"),
@@ -46,7 +44,7 @@ class AppSettings:
             chunk_size=int(os.getenv("CHUNK_SIZE", "1024")),
             chunk_overlap=int(os.getenv("CHUNK_OVERLAP", "100")),
             query_mode=os.getenv("VECTOR_STORE_QUERY_MODE", "default"),
-            similarity_top_k=int(os.getenv("SIMILARITY_TOP_K", "8")),
+            similarity_top_k=int(os.getenv("SIMILARITY_TOP_K", "1")),
             sparse_top_k=int(os.getenv("SPARSE_TOP_K", "8")),
             hybrid_alpha=float(os.getenv("HYBRID_ALPHA", "0.5")),
         )

@@ -77,7 +77,7 @@ Resources:
     Properties:
       Description: !Sub "Runtime secrets for ${ProjectSlug}"
       Name: !Ref SecretName
-      SecretString: '{"OPENAI_API_KEY":"REPLACE_ME"}'
+      SecretString: '{"GROQ_API_KEY":"REPLACE_ME"}'
       Tags:
         - Key: Name
           Value: !Sub "${ProjectSlug}-runtime"
