@@ -8,7 +8,7 @@ ROOT = project_root()
 
 MEDRAG_CONFIG = ProjectConfig(
     name="medrag",
-    collection_name="medrag_collection_bge_small",
+    collection_name="medrag_collection_bge_small_fine",
     system_prompt=(
         "You are a clinical guidelines assistant. Answer medical questions using only the "
         "retrieved context. Cite source organizations when possible, state uncertainty when "

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -188,7 +189,10 @@ class MedRAGIngestor(DocumentIngestor):
                 )
 
         return documents
-
+    @staticmethod
+    def _split_sentences(text: str) -> list[str]:
+        parts = re.split(r"(?<=[.!?])\s+", text.strip())
+        return [part.strip() for part in parts if part.strip()]
     @staticmethod
     def _search_pubmed(query: str, max_results: int) -> list[str]:
         params = {
@@ -287,17 +291,20 @@ class MedRAGIngestor(DocumentIngestor):
         documents = []
 
         for item in self.bootstrap_documents:
-            documents.append(
-                SourceDocument(
-                    text=item["text"],
-                    metadata={
-                        "source": "bootstrap",
-                        "source_file": "bootstrap_seed",
-                        "title": item["title"],
-                        "parser": "bootstrap_seed",
-                        "source_org": "Bootstrap",
-                        "evidence_type": "guideline_summary",
-                        "specialty": item["specialty"],
+            parts = self._split_sentences(item["text"])
+            for part_number, text in enumerate(parts, start=1):
+                documents.append(
+                        SourceDocument(
+                            text=text,
+                            metadata={
+                                "source": "bootstrap",
+                                "source_file": "bootstrap_seed",
+                                "title": item["title"],
+                                "parser": "bootstrap_seed",
+                                "source_org": "Bootstrap",
+                                "evidence_type": "guideline_summary",
+                                "specialty": item["specialty"],
+                                "sentence_part": part_number,
                     },
                 )
             )

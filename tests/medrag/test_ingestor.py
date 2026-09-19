@@ -55,3 +55,31 @@ def test_load_and_parse_includes_bootstrap_documents(monkeypatch, tmp_path: Path
     titles = {doc.metadata["title"] for doc in docs}
     assert "Type 2 diabetes first-line therapy overview" in titles
     assert "Why medical guidance should include a disclaimer" in titles
+
+def test_bootstrap_documents_are_split_into_sentence_level_documents():
+    ingestor = MedRAGIngestor(config=None)  # type: ignore[arg-type]
+
+    docs = ingestor._load_bootstrap_documents()
+
+    type2_docs = [
+        doc
+        for doc in docs
+        if doc.metadata["title"] == "Type 2 diabetes first-line therapy overview"
+    ]
+
+    assert len(type2_docs) == 2
+
+    assert type2_docs[0].text == (
+        "Type 2 diabetes management usually begins with lifestyle modification, "
+        "glycemic monitoring, and metformin when there are no contraindications."
+    )
+
+    assert type2_docs[0].metadata["sentence_part"] == 1
+
+    assert type2_docs[1].text == (
+        "Guidelines commonly describe individualized escalation to GLP-1 receptor "
+        "agonists, SGLT2 inhibitors, or insulin based on comorbidities, kidney "
+        "function, cardiovascular risk, and glycemic control."
+    )
+
+    assert type2_docs[1].metadata["sentence_part"] == 2
